@@ -29,12 +29,11 @@ This dataset is taken from : https://www.kaggle.com/datasets/vatsalmavani/spotif
     - Choose your desired platform among `Mac`, `Windows` or `Linux`.
     - Click `Download`.
 
-4. Install the required `dependencies`:
+4. Install the required dependencies:
 
     ```
     pip install -r requirements.txt
     ```
-
 
 5. Start the `server` in the terminal:
     ```
