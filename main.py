@@ -7,7 +7,6 @@ from pydantic import BaseModel
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 from collections import defaultdict
-from sklearn.metrics import euclidean_distances
 from scipy.spatial.distance import cdist
 
 app = fastapi.FastAPI()
@@ -18,7 +17,7 @@ spotify_data = pd.read_csv('datasets/data.csv')
 
 # Copy and paste cells 15-16 from main.ipynb file
 sp = spotipy.Spotify(auth_manager=SpotifyClientCredentials(client_id="PASTE YOUR SPOTIFY CLIENT ID",
-                                                           client_secret="PASTE YOUR SPOTIFY CLIENT SECRET KEY"))
+                                                           client_secret="PASTE YOUR SPOTIFY SECRET KEY"))
 
 def find_song(name, year):
     song_data = defaultdict()
@@ -102,17 +101,21 @@ def recommend_songs( song_list, spotify_data, n_songs=10):
 
 # Define the model for song input
 class SongInput(BaseModel):
-    name: str
-    year: int
+    name: str # song name
+    year: int # year published
 
-# Define the endpoint for recommendations
-@app.post("/recommendations")
+# Define the endpoint
+@app.post("/")
 async def get_recommendations(song_input: SongInput):
     recommendations = recommend_songs([song_input.dict()], spotify_data)
     return recommendations
 
-# Start the server
-if __name__ == "__main__":
-    import uvicorn
+# Step 1: Start the server in the terminal, uvicorn main:app --reload
 
-    uvicorn.run(app, host="127.0.0.1", port=8000) # Open your browser and go to http://127.0.0.1:8000/docs
+# Step 2: Open postman and "Add request"
+
+# Step 3: Uvicorn will be running on localhost:8000, so paste this URL
+
+# Step 4: Select "POST", "Body", "raw", "JSON" and then paste the sample.json data in the raw block
+
+# Step 5: Now, "Send" the request
